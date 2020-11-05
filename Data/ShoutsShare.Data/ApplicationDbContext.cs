@@ -32,6 +32,7 @@
         public DbSet<Content> Contents { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<SocialMedia> SocialMedias { get; set; }
+        public DbSet<UserContent> UserContents { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -54,6 +55,9 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<UserContent>()
+                .HasKey(uc => new { uc.UserId, uc.ContentId });
+
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 

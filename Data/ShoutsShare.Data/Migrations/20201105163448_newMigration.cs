@@ -26,6 +26,23 @@ namespace ShoutsShare.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ContentThumbnail",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    ImageUrl = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContentThumbnail", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Countries",
                 columns: table => new
                 {
@@ -193,7 +210,6 @@ namespace ShoutsShare.Data.Migrations
                     Info = table.Column<string>(nullable: true),
                     Likes = table.Column<int>(nullable: false),
                     CountryId = table.Column<int>(nullable: false),
-                    SocialMediaId = table.Column<int>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -213,12 +229,6 @@ namespace ShoutsShare.Data.Migrations
                         name: "FK_AspNetUsers_Countries_CountryId",
                         column: x => x.CountryId,
                         principalTable: "Countries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_SocialMedias_SocialMediaId",
-                        column: x => x.SocialMediaId,
-                        principalTable: "SocialMedias",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -312,19 +322,19 @@ namespace ShoutsShare.Data.Migrations
                 name: "Contents",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Url = table.Column<string>(nullable: false),
                     Title = table.Column<string>(nullable: false),
+                    Type = table.Column<string>(nullable: false),
                     Views = table.Column<int>(nullable: false),
                     Likes = table.Column<int>(nullable: false),
                     Duration = table.Column<TimeSpan>(nullable: true),
-                    SocialMediaId = table.Column<int>(nullable: false),
-                    CreatorId = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: false),
+                    ContentThumbnailId = table.Column<int>(nullable: false),
                     Info = table.Column<string>(nullable: true),
                     DailyRankListId = table.Column<int>(nullable: true),
                     MonthlyRankListId = table.Column<int>(nullable: true),
@@ -334,9 +344,9 @@ namespace ShoutsShare.Data.Migrations
                 {
                     table.PrimaryKey("PK_Contents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Contents_AspNetUsers_CreatorId",
-                        column: x => x.CreatorId,
-                        principalTable: "AspNetUsers",
+                        name: "FK_Contents_ContentThumbnail_ContentThumbnailId",
+                        column: x => x.ContentThumbnailId,
+                        principalTable: "ContentThumbnail",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -352,9 +362,9 @@ namespace ShoutsShare.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Contents_SocialMedias_SocialMediaId",
-                        column: x => x.SocialMediaId,
-                        principalTable: "SocialMedias",
+                        name: "FK_Contents_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -378,7 +388,7 @@ namespace ShoutsShare.Data.Migrations
                     PostDate = table.Column<DateTime>(nullable: false),
                     Post = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false),
-                    ContentId = table.Column<int>(nullable: true)
+                    ContentId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -391,6 +401,42 @@ namespace ShoutsShare.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Comment_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserContents",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    ContentId = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    SocialMediaId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserContents", x => new { x.UserId, x.ContentId });
+                    table.ForeignKey(
+                        name: "FK_UserContents_Contents_ContentId",
+                        column: x => x.ContentId,
+                        principalTable: "Contents",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserContents_SocialMedias_SocialMediaId",
+                        column: x => x.SocialMediaId,
+                        principalTable: "SocialMedias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserContents_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -457,11 +503,6 @@ namespace ShoutsShare.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_SocialMediaId",
-                table: "AspNetUsers",
-                column: "SocialMediaId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Comment_ContentId",
                 table: "Comment",
                 column: "ContentId");
@@ -477,9 +518,9 @@ namespace ShoutsShare.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contents_CreatorId",
+                name: "IX_Contents_ContentThumbnailId",
                 table: "Contents",
-                column: "CreatorId");
+                column: "ContentThumbnailId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contents_DailyRankListId",
@@ -497,14 +538,19 @@ namespace ShoutsShare.Data.Migrations
                 column: "MonthlyRankListId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contents_SocialMediaId",
+                name: "IX_Contents_UserId",
                 table: "Contents",
-                column: "SocialMediaId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contents_WeeklyRankListId",
                 table: "Contents",
                 column: "WeeklyRankListId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContentThumbnail_IsDeleted",
+                table: "ContentThumbnail",
+                column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Countries_IsDeleted",
@@ -530,6 +576,21 @@ namespace ShoutsShare.Data.Migrations
                 name: "IX_SocialMedias_IsDeleted",
                 table: "SocialMedias",
                 column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserContents_ContentId",
+                table: "UserContents",
+                column: "ContentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserContents_IsDeleted",
+                table: "UserContents",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserContents_SocialMediaId",
+                table: "UserContents",
+                column: "SocialMediaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WeeklyRankLists_IsDeleted",
@@ -561,13 +622,19 @@ namespace ShoutsShare.Data.Migrations
                 name: "Settings");
 
             migrationBuilder.DropTable(
+                name: "UserContents");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Contents");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "SocialMedias");
+
+            migrationBuilder.DropTable(
+                name: "ContentThumbnail");
 
             migrationBuilder.DropTable(
                 name: "DailyRankLists");
@@ -576,13 +643,13 @@ namespace ShoutsShare.Data.Migrations
                 name: "MonthlyRankLists");
 
             migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "WeeklyRankLists");
 
             migrationBuilder.DropTable(
                 name: "Countries");
-
-            migrationBuilder.DropTable(
-                name: "SocialMedias");
         }
     }
 }

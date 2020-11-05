@@ -11,8 +11,11 @@ namespace ShoutsShare.Data.Models
     {
         public Content()
         {
+            this.Id = Guid.NewGuid().ToString();
             this.Comments = new HashSet<Comment>();
         }
+
+        public string Id { get; set; }
 
         [Required]
         public string Url { get; set; }
@@ -20,20 +23,23 @@ namespace ShoutsShare.Data.Models
         [Required]
         public string Title { get; set; }
 
+        [Required]
+        public string Type { get; set; }
+
         public int Views { get; set; }
 
         public int Likes { get; set; }
 
         public TimeSpan? Duration { get; set; }
 
-        [ForeignKey(nameof(SocialMedia))]
-        public int SocialMediaId { get; set; }
-        public SocialMedia SocialMedia { get; set; }
-
         [Required]
-        [ForeignKey(nameof(Creator))]
-        public string CreatorId { get; set; }
-        public virtual ApplicationUser Creator { get; set; }
+        [ForeignKey(nameof(User))]
+        public string UserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
+
+        [ForeignKey(nameof(ContentThumbnail))]
+        public int ContentThumbnailId { get; set; }
+        public ContentThumbnail ContentThumbnail { get; set; }
 
         public string Info { get; set; }
 

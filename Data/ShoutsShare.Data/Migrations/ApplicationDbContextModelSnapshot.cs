@@ -257,9 +257,6 @@ namespace ShoutsShare.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SocialMediaId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -283,8 +280,6 @@ namespace ShoutsShare.Data.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("SocialMediaId");
-
                     b.ToTable("AspNetUsers");
                 });
 
@@ -295,8 +290,8 @@ namespace ShoutsShare.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ContentId")
-                        .HasColumnType("int");
+                    b.Property<string>("ContentId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -333,17 +328,14 @@ namespace ShoutsShare.Data.Migrations
 
             modelBuilder.Entity("ShoutsShare.Data.Models.Content", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ContentThumbnailId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("DailyRankListId")
                         .HasColumnType("int");
@@ -369,16 +361,21 @@ namespace ShoutsShare.Data.Migrations
                     b.Property<int?>("MonthlyRankListId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SocialMediaId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Views")
                         .HasColumnType("int");
@@ -388,7 +385,7 @@ namespace ShoutsShare.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatorId");
+                    b.HasIndex("ContentThumbnailId");
 
                     b.HasIndex("DailyRankListId");
 
@@ -396,11 +393,40 @@ namespace ShoutsShare.Data.Migrations
 
                     b.HasIndex("MonthlyRankListId");
 
-                    b.HasIndex("SocialMediaId");
+                    b.HasIndex("UserId");
 
                     b.HasIndex("WeeklyRankListId");
 
                     b.ToTable("Contents");
+                });
+
+            modelBuilder.Entity("ShoutsShare.Data.Models.ContentThumbnail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("ContentThumbnail");
                 });
 
             modelBuilder.Entity("ShoutsShare.Data.Models.Country", b =>
@@ -630,6 +656,43 @@ namespace ShoutsShare.Data.Migrations
                     b.ToTable("SocialMedias");
                 });
 
+            modelBuilder.Entity("ShoutsShare.Data.Models.UserContent", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ContentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("SocialMediaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "ContentId");
+
+                    b.HasIndex("ContentId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("SocialMediaId");
+
+                    b.ToTable("UserContents");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("ShoutsShare.Data.Models.ApplicationRole", null)
@@ -692,12 +755,6 @@ namespace ShoutsShare.Data.Migrations
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("ShoutsShare.Data.Models.SocialMedia", "SocialMedia")
-                        .WithMany()
-                        .HasForeignKey("SocialMediaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ShoutsShare.Data.Models.Comment", b =>
@@ -715,9 +772,9 @@ namespace ShoutsShare.Data.Migrations
 
             modelBuilder.Entity("ShoutsShare.Data.Models.Content", b =>
                 {
-                    b.HasOne("ShoutsShare.Data.Models.ApplicationUser", "Creator")
-                        .WithMany("Contents")
-                        .HasForeignKey("CreatorId")
+                    b.HasOne("ShoutsShare.Data.Models.ContentThumbnail", "ContentThumbnail")
+                        .WithMany()
+                        .HasForeignKey("ContentThumbnailId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -729,15 +786,34 @@ namespace ShoutsShare.Data.Migrations
                         .WithMany("Contents")
                         .HasForeignKey("MonthlyRankListId");
 
-                    b.HasOne("ShoutsShare.Data.Models.SocialMedia", "SocialMedia")
+                    b.HasOne("ShoutsShare.Data.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("SocialMediaId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ShoutsShare.Data.Models.RankLists.WeeklyRankList", null)
                         .WithMany("Contents")
                         .HasForeignKey("WeeklyRankListId");
+                });
+
+            modelBuilder.Entity("ShoutsShare.Data.Models.UserContent", b =>
+                {
+                    b.HasOne("ShoutsShare.Data.Models.Content", "Content")
+                        .WithMany()
+                        .HasForeignKey("ContentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ShoutsShare.Data.Models.SocialMedia", "SocialMedia")
+                        .WithMany()
+                        .HasForeignKey("SocialMediaId");
+
+                    b.HasOne("ShoutsShare.Data.Models.ApplicationUser", "User")
+                        .WithMany("Contents")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

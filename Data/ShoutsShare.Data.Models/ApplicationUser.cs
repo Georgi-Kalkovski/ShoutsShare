@@ -22,7 +22,7 @@ namespace ShoutsShare.Data.Models
             this.Logins = new HashSet<IdentityUserLogin<string>>();
             this.FriendList = new HashSet<ApplicationUser>();
 
-            this.Contents = new HashSet<Content>();
+            this.Contents = new HashSet<UserContent>();
         }
 
         [Required]
@@ -52,11 +52,7 @@ namespace ShoutsShare.Data.Models
         public int CountryId { get; set; }
         public Country Country { get; set; }
 
-        [ForeignKey(nameof(SocialMedia))]
-        public int SocialMediaId { get; set; }
-        public SocialMedia SocialMedia { get; set; }
-
-        public virtual ICollection<Content> Contents { get; set; }
+        public virtual ICollection<UserContent> Contents { get; set; }
 
         public virtual ICollection<ApplicationUser> FriendList { get; set; }
 
