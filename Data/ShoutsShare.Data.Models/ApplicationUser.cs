@@ -7,6 +7,10 @@ namespace ShoutsShare.Data.Models
     using ShoutsShare.Data.Common.Models;
 
     using Microsoft.AspNetCore.Identity;
+    using ShoutsShare.Data.Models.Enums;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.ComponentModel.DataAnnotations;
+    using ShoutsShare.Data.Common;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
@@ -16,7 +20,45 @@ namespace ShoutsShare.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.FriendList = new HashSet<ApplicationUser>();
+
+            this.Contents = new HashSet<Content>();
         }
+
+        [Required]
+        [MaxLength(DataValidation.NameMaxLength)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MaxLength(DataValidation.NameMaxLength)]
+        public string LastName { get; set; }
+
+        [Required]
+        [MaxLength(DataValidation.NameMaxLength)]
+        public string Nickname { get; set; }
+
+        public DateTime BirthDate { get; set; }
+
+        [Required]
+        public Gender Gender { get; set; }
+
+        public string Address { get; set; }
+
+        public string Info { get; set; }
+
+        public int Likes { get; set; }
+
+        [ForeignKey(nameof(Country))]
+        public int CountryId { get; set; }
+        public Country Country { get; set; }
+
+        [ForeignKey(nameof(SocialMedia))]
+        public int SocialMediaId { get; set; }
+        public SocialMedia SocialMedia { get; set; }
+
+        public virtual ICollection<Content> Contents { get; set; }
+
+        public virtual ICollection<ApplicationUser> FriendList { get; set; }
 
         // Audit info
         public DateTime CreatedOn { get; set; }

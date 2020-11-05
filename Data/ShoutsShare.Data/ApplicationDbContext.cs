@@ -11,6 +11,7 @@
 
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using ShoutsShare.Data.Models.RankLists;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -25,6 +26,12 @@
         }
 
         public DbSet<Setting> Settings { get; set; }
+        public DbSet<DailyRankList> DailyRankLists { get; set; }
+        public DbSet<WeeklyRankList> WeeklyRankLists { get; set; }
+        public DbSet<MonthlyRankList> MonthlyRankLists { get; set; }
+        public DbSet<Content> Contents { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<SocialMedia> SocialMedias { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
