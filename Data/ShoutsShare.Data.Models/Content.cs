@@ -15,7 +15,7 @@ namespace ShoutsShare.Data.Models
             this.Comments = new HashSet<Comment>();
         }
 
-        public string Id { get; set; }
+        public new string Id { get; set; }
 
         [Required]
         public string Url { get; set; }

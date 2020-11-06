@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\ShoutsShare.Data.Common\ShoutsShare.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\ShoutsShare.Data.Models\ShoutsShare.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\ShoutsShare.Web.ViewModels\ShoutsShare.Web.ViewModels.csproj" />
     <ProjectReference Include="..\ShoutsShare.Services.Mapping\ShoutsShare.Services.Mapping.csproj" />
   </ItemGroup>
 
