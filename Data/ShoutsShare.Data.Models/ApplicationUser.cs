@@ -25,31 +25,31 @@ namespace ShoutsShare.Data.Models
             this.Contents = new HashSet<UserContent>();
         }
 
+        [Required]
         [MaxLength(DataValidation.NameMaxLength)]
         public string FirstName { get; set; }
 
+        [Required]
         [MaxLength(DataValidation.NameMaxLength)]
         public string LastName { get; set; }
 
+        [Required]
         [MaxLength(DataValidation.NameMaxLength)]
         public string Nickname { get; set; }
 
         public DateTime BirthDate { get; set; }
 
+        [Required]
         public Gender Gender { get; set; }
 
         public string Address { get; set; }
 
         public string Info { get; set; }
 
-        public int? Likes { get; set; }
-
-        [ForeignKey(nameof(ProfilePicture))]
-        public int? ProfilePictureId { get; set; }
-        public ProfilePicture ProfilePicture { get; set; }
+        public int Likes { get; set; }
 
         [ForeignKey(nameof(Country))]
-        public int? CountryId { get; set; }
+        public int CountryId { get; set; }
         public Country Country { get; set; }
 
         public virtual ICollection<UserContent> Contents { get; set; }

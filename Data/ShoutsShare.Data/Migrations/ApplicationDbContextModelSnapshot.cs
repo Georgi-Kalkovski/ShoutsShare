@@ -185,7 +185,7 @@ namespace ShoutsShare.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CountryId")
+                    b.Property<int>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
@@ -202,6 +202,7 @@ namespace ShoutsShare.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
@@ -215,10 +216,11 @@ namespace ShoutsShare.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
-                    b.Property<int?>("Likes")
+                    b.Property<int>("Likes")
                         .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
@@ -231,6 +233,7 @@ namespace ShoutsShare.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Nickname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
@@ -250,9 +253,6 @@ namespace ShoutsShare.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("ProfilePictureId")
-                        .HasColumnType("int");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -279,8 +279,6 @@ namespace ShoutsShare.Data.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("ProfilePictureId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -460,38 +458,6 @@ namespace ShoutsShare.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Countries");
-                });
-
-            modelBuilder.Entity("ShoutsShare.Data.Models.ProfilePicture", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ProfilePicture");
                 });
 
             modelBuilder.Entity("ShoutsShare.Data.Models.RankLists.DailyRankList", b =>
@@ -786,11 +752,9 @@ namespace ShoutsShare.Data.Migrations
 
                     b.HasOne("ShoutsShare.Data.Models.Country", "Country")
                         .WithMany("CountryUsers")
-                        .HasForeignKey("CountryId");
-
-                    b.HasOne("ShoutsShare.Data.Models.ProfilePicture", "ProfilePicture")
-                        .WithMany()
-                        .HasForeignKey("ProfilePictureId");
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ShoutsShare.Data.Models.Comment", b =>
@@ -831,15 +795,6 @@ namespace ShoutsShare.Data.Migrations
                     b.HasOne("ShoutsShare.Data.Models.RankLists.WeeklyRankList", null)
                         .WithMany("Contents")
                         .HasForeignKey("WeeklyRankListId");
-                });
-
-            modelBuilder.Entity("ShoutsShare.Data.Models.ProfilePicture", b =>
-                {
-                    b.HasOne("ShoutsShare.Data.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ShoutsShare.Data.Models.UserContent", b =>
