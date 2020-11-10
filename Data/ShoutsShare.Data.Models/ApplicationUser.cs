@@ -4,13 +4,8 @@ namespace ShoutsShare.Data.Models
     using System;
     using System.Collections.Generic;
 
-    using ShoutsShare.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
-    using ShoutsShare.Data.Models.Enums;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.ComponentModel.DataAnnotations;
-    using ShoutsShare.Data.Common;
+    using ShoutsShare.Data.Common.Models;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
@@ -20,41 +15,8 @@ namespace ShoutsShare.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
-            this.FriendList = new HashSet<ApplicationUser>();
-
-            this.Contents = new HashSet<UserContent>();
+            this.Contents = new HashSet<Content>();
         }
-
-        [MaxLength(DataValidation.NameMaxLength)]
-        public string FirstName { get; set; }
-
-        [MaxLength(DataValidation.NameMaxLength)]
-        public string LastName { get; set; }
-
-        [MaxLength(DataValidation.NameMaxLength)]
-        public string Nickname { get; set; }
-
-        public DateTime BirthDate { get; set; }
-
-        public Gender Gender { get; set; }
-
-        public string Address { get; set; }
-
-        public string Info { get; set; }
-
-        public int? Likes { get; set; }
-
-        [ForeignKey(nameof(ProfilePicture))]
-        public int? ProfilePictureId { get; set; }
-        public ProfilePicture ProfilePicture { get; set; }
-
-        [ForeignKey(nameof(Country))]
-        public int? CountryId { get; set; }
-        public Country Country { get; set; }
-
-        public virtual ICollection<UserContent> Contents { get; set; }
-
-        public virtual ICollection<ApplicationUser> FriendList { get; set; }
 
         // Audit info
         public DateTime CreatedOn { get; set; }
@@ -71,5 +33,7 @@ namespace ShoutsShare.Data.Models
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        public virtual ICollection<Content> Contents { get; set; }
     }
 }

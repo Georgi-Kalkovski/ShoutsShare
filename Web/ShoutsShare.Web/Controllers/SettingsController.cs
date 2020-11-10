@@ -3,12 +3,11 @@
     using System;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Mvc;
     using ShoutsShare.Data.Common.Repositories;
     using ShoutsShare.Data.Models;
     using ShoutsShare.Services.Data;
     using ShoutsShare.Web.ViewModels.Settings;
-
-    using Microsoft.AspNetCore.Mvc;
 
     public class SettingsController : BaseController
     {

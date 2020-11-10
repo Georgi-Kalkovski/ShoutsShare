@@ -1,10 +1,9 @@
-﻿using ShoutsShare.Data.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ShoutsShare.Data.Models.RankLists
+﻿namespace ShoutsShare.Data.Models.RankLists
 {
+    using System.Collections.Generic;
+
+    using ShoutsShare.Data.Common.Models;
+
     public class DailyRankList : BaseDeletableModel<int>
     {
         public DailyRankList()

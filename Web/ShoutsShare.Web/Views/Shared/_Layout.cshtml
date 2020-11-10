@@ -42,7 +42,11 @@
                     <nav class="nav-menu d-none d-lg-block">
                         <ul>
                             <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                            <li><a href="#about">Leadeboard</a></li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                            <li><a asp-controller="Contents" asp-action="Index">My Content</a></li>
+                            }
+                            <li><a asp-controller="Leaderboard" asp-action="Index">Leaderboard</a></li>
                             <li class="drop-down">
                                 <a href="">Categories</a>
                                 <ul>

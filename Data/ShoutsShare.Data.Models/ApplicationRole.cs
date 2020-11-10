@@ -3,9 +3,8 @@ namespace ShoutsShare.Data.Models
 {
     using System;
 
-    using ShoutsShare.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+    using ShoutsShare.Data.Common.Models;
 
     public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
     {

@@ -1,14 +1,11 @@
-﻿using ShoutsShare.Data.Common.Models;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace ShoutsShare.Data.Models
+﻿namespace ShoutsShare.Data.Models
 {
+    using ShoutsShare.Data.Common.Models;
+
     public class ProfilePicture : BaseDeletableModel<int>
     {
-        [Required]
-        [ForeignKey(nameof(User))]
         public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
+
+        public virtual Profile User { get; set; }
     }
 }
