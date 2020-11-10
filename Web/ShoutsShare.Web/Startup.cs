@@ -17,6 +17,7 @@
     using ShoutsShare.Data.Repositories;
     using ShoutsShare.Data.Seeding;
     using ShoutsShare.Services.Data;
+    using ShoutsShare.Services.Data.Services;
     using ShoutsShare.Services.Mapping;
     using ShoutsShare.Services.Messaging;
     using ShoutsShare.Web.ViewModels;
@@ -63,6 +64,7 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IContentsService, ContentsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,6 +1,9 @@
 ﻿namespace ShoutsShare.Web.ViewModels.Home
 {
-    public class IndexContentViewModel
+    using ShoutsShare.Data.Models;
+    using ShoutsShare.Services.Mapping;
+
+    public class IndexContentViewModel : IMapFrom<Content>
     {
         public string Title { get; set; }
 

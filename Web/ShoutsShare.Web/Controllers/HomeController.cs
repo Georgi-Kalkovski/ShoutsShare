@@ -1,34 +1,28 @@
 ﻿namespace ShoutsShare.Web.Controllers
 {
     using System.Diagnostics;
-    using System.Linq;
 
     using Microsoft.AspNetCore.Mvc;
-    using ShoutsShare.Data;
+    using ShoutsShare.Services.Data.Services;
     using ShoutsShare.Web.ViewModels;
     using ShoutsShare.Web.ViewModels.Home;
 
     public class HomeController : BaseController
     {
-        private readonly ApplicationDbContext db;
+        private readonly IContentsService contentsService;
 
-        public HomeController(ApplicationDbContext db)
+        public HomeController(IContentsService contentsService)
         {
-            this.db = db;
+            this.contentsService = contentsService;
         }
 
         public IActionResult Index()
         {
-            var viewModel = new IndexViewModel();
-            var contents = this.db.Contents.Select(x => new IndexContentViewModel
+            var viewModel = new IndexViewModel
             {
-                Title = x.Title,
-                Description = x.Description,
-                ImageUrl = x.ImageUrl,
-                Type = x.Type,
-            }).ToList();
-
-            viewModel.Contents = contents;
+                Contents =
+                this.contentsService.GetAll<IndexContentViewModel>(),
+            };
             return this.View(viewModel);
         }
 
