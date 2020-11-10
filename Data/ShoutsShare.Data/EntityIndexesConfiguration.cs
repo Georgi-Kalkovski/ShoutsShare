@@ -2,9 +2,8 @@
 {
     using System.Linq;
 
-    using ShoutsShare.Data.Common.Models;
-
     using Microsoft.EntityFrameworkCore;
+    using ShoutsShare.Data.Common.Models;
 
     internal static class EntityIndexesConfiguration
     {

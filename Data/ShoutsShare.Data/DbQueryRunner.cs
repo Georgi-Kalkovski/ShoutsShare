@@ -3,9 +3,8 @@
     using System;
     using System.Threading.Tasks;
 
-    using ShoutsShare.Data.Common;
-
     using Microsoft.EntityFrameworkCore;
+    using ShoutsShare.Data.Common;
 
     public class DbQueryRunner : IDbQueryRunner
     {

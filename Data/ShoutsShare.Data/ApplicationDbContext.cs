@@ -6,11 +6,10 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using ShoutsShare.Data.Common.Models;
-    using ShoutsShare.Data.Models;
-
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using ShoutsShare.Data.Common.Models;
+    using ShoutsShare.Data.Models;
     using ShoutsShare.Data.Models.RankLists;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
@@ -64,7 +63,7 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //builder.Entity<UserContent>().HasKey(uc => new { uc.UserId, uc.ContentId });
+            // builder.Entity<UserContent>().HasKey(uc => new { uc.UserId, uc.ContentId });
 
             // Needed for Identity models configuration
             base.OnModelCreating(builder);

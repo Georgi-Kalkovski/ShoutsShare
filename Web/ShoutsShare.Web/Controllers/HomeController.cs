@@ -2,6 +2,7 @@
 {
     using System.Diagnostics;
     using System.Linq;
+
     using Microsoft.AspNetCore.Mvc;
     using ShoutsShare.Data;
     using ShoutsShare.Web.ViewModels;

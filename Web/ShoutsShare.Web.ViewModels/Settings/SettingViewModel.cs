@@ -1,9 +1,8 @@
 ﻿namespace ShoutsShare.Web.ViewModels.Settings
 {
+    using AutoMapper;
     using ShoutsShare.Data.Models;
     using ShoutsShare.Services.Mapping;
-
-    using AutoMapper;
 
     public class SettingViewModel : IMapFrom<Setting>, IHaveCustomMappings
     {

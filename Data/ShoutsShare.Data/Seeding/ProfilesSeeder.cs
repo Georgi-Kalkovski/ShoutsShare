@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore.Internal;
@@ -17,6 +18,7 @@
             }
 
             var profiles = new List<string> { "Sport", "Coronavirus", "News", "Music", "Programming", "Cats", "Dogs" };
+
             foreach (var profile in profiles)
             {
                 await dbContext.Profiles.AddAsync(new Profile
