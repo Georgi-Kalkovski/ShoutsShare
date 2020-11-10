@@ -27,5 +27,12 @@
 
             return query.To<T>().ToList();
         }
+
+        public T GetByName<T>()
+        {
+            var content = this.contentsRepository.All()
+                .To<T>().FirstOrDefault();
+            return content;
+        }
     }
 }

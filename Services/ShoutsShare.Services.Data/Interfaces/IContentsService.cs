@@ -5,5 +5,7 @@
     public interface IContentsService
     {
         IEnumerable<T> GetAll<T>(int? count = null);
+
+        T GetByName<T>();
     }
 }

@@ -104,7 +104,8 @@
                 endpoints =>
                     {
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-                        endpoints.MapControllerRoute("areaRoute", "{controller=Home}/{action=Index}/{id?}");
+                        endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                        endpoints.MapControllerRoute("shoutContent", "{name:minlength(3)}", new { controller = "Contents", action = "ByName" });
                         endpoints.MapRazorPages();
                     });
         }
