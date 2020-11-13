@@ -3,9 +3,12 @@
     using System.Diagnostics;
 
     using Microsoft.AspNetCore.Mvc;
-    using ShoutsShare.Services.Data.Services;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
+    using ShoutsShare.Data.Common.Repositories;
+    using ShoutsShare.Data.Models;
+    using ShoutsShare.Services.Data.Interfaces;
     using ShoutsShare.Web.ViewModels;
-    using ShoutsShare.Web.ViewModels.Home;
+    using ShoutsShare.Web.ViewModels.Contents;
 
     public class HomeController : BaseController
     {
@@ -18,18 +21,8 @@
 
         public IActionResult Index()
         {
-            var viewModel = new IndexViewModel
-            {
-                Contents =
-                this.contentsService.GetAll<IndexContentViewModel>(),
-            };
-            return this.View(viewModel);
-        }
-
-        public IActionResult Privacy()
-        {
             return this.View();
-        }
+            }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -10,7 +10,6 @@
     using Microsoft.EntityFrameworkCore;
     using ShoutsShare.Data.Common.Models;
     using ShoutsShare.Data.Models;
-    using ShoutsShare.Data.Models.RankLists;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -24,23 +23,17 @@
         {
         }
 
-        public DbSet<Setting> Settings { get; set; }
-
-        public DbSet<DailyRankList> DailyRankLists { get; set; }
-
-        public DbSet<WeeklyRankList> WeeklyRankLists { get; set; }
-
-        public DbSet<MonthlyRankList> MonthlyRankLists { get; set; }
-
-        public DbSet<Profile> Profiles { get; set; }
-
-        public DbSet<Content> Contents { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         public DbSet<Comment> Comments { get; set; }
 
-        public DbSet<Country> Countries { get; set; }
+        public DbSet<Content> Contents { get; set; }
 
-        public DbSet<SocialMedia> SocialMedias { get; set; }
+        public DbSet<FileModel> FileModels { get; set; }
+
+        public DbSet<Vote> Votes { get; set; }
+
+        public DbSet<Setting> Settings { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -63,8 +56,6 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            // builder.Entity<UserContent>().HasKey(uc => new { uc.UserId, uc.ContentId });
-
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 

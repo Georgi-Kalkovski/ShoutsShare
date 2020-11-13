@@ -1,11 +1,12 @@
-﻿namespace ShoutsShare.Services.Data.Services
+﻿namespace ShoutsShare.Services.Data.Interfaces
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using ShoutsShare.Web.ViewModels.Contents;
 
     public interface IContentsService
     {
-        IEnumerable<T> GetAll<T>(int? count = null);
-
-        T GetByName<T>();
+        Task CreateAsync(CreateContentInputModel input);
     }
 }

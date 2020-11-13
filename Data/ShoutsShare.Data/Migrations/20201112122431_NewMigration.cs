@@ -56,7 +56,7 @@
                 });
 
             migrationBuilder.CreateTable(
-                name: "Countries",
+                name: "Categories",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -69,56 +69,7 @@
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Countries", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DailyRankLists",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DailyRankLists", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MonthlyRankLists",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MonthlyRankLists", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProfilePicture",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                    UserId = table.Column<string>(nullable: true),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProfilePicture", x => x.Id);
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -137,58 +88,6 @@
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Settings", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SocialMedias",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                    Facebook = table.Column<string>(nullable: true),
-                    Instagram = table.Column<string>(nullable: true),
-                    Twitter = table.Column<string>(nullable: true),
-                    Tumblr = table.Column<string>(nullable: true),
-                    LinkedIn = table.Column<string>(nullable: true),
-                    WhatsApp = table.Column<string>(nullable: true),
-                    Snapchat = table.Column<string>(nullable: true),
-                    Pinterest = table.Column<string>(nullable: true),
-                    Reddit = table.Column<string>(nullable: true),
-                    YouTube = table.Column<string>(nullable: true),
-                    Mix = table.Column<string>(nullable: true),
-                    Tagged = table.Column<string>(nullable: true),
-                    Nextdoor = table.Column<string>(nullable: true),
-                    DeviantArt = table.Column<string>(nullable: true),
-                    Quora = table.Column<string>(nullable: true),
-                    Meetup = table.Column<string>(nullable: true),
-                    ReverbNation = table.Column<string>(nullable: true),
-                    Flixster = table.Column<string>(nullable: true),
-                    Goodreads = table.Column<string>(nullable: true),
-                    Twitch = table.Column<string>(nullable: true),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SocialMedias", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "WeeklyRankLists",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WeeklyRankLists", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -298,51 +197,6 @@
                 });
 
             migrationBuilder.CreateTable(
-                name: "Profiles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Nickname = table.Column<string>(nullable: true),
-                    BirthDate = table.Column<DateTime>(nullable: true),
-                    Gender = table.Column<int>(nullable: true),
-                    Address = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Likes = table.Column<int>(nullable: true),
-                    ProfilePictureId = table.Column<int>(nullable: true),
-                    CountryId = table.Column<int>(nullable: true),
-                    ProfileId = table.Column<int>(nullable: true),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Profiles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Profiles_Countries_CountryId",
-                        column: x => x.CountryId,
-                        principalTable: "Countries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Profiles_Profiles_ProfileId",
-                        column: x => x.ProfileId,
-                        principalTable: "Profiles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Profiles_ProfilePicture_ProfilePictureId",
-                        column: x => x.ProfilePictureId,
-                        principalTable: "ProfilePicture",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Contents",
                 columns: table => new
                 {
@@ -352,51 +206,28 @@
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
-                    ImageUrl = table.Column<string>(nullable: true),
-                    Type = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
+                    Duration = table.Column<TimeSpan>(nullable: true),
                     Views = table.Column<int>(nullable: true),
                     Likes = table.Column<int>(nullable: true),
-                    Duration = table.Column<TimeSpan>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
-                    UserId1 = table.Column<int>(nullable: true),
-                    ApplicationUserId = table.Column<string>(nullable: true),
-                    DailyRankListId = table.Column<int>(nullable: true),
-                    MonthlyRankListId = table.Column<int>(nullable: true),
-                    WeeklyRankListId = table.Column<int>(nullable: true),
+                    FileModelId = table.Column<string>(nullable: true),
+                    CategoryId = table.Column<int>(nullable: true),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Contents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Contents_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Contents_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Contents_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Contents_DailyRankLists_DailyRankListId",
-                        column: x => x.DailyRankListId,
-                        principalTable: "DailyRankLists",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Contents_MonthlyRankLists_MonthlyRankListId",
-                        column: x => x.MonthlyRankListId,
-                        principalTable: "MonthlyRankLists",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Contents_Profiles_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "Profiles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Contents_WeeklyRankLists_WeeklyRankListId",
-                        column: x => x.WeeklyRankListId,
-                        principalTable: "WeeklyRankLists",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -411,10 +242,10 @@
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
+                    ContentId = table.Column<int>(nullable: false),
+                    ParentId = table.Column<int>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    ContentId = table.Column<int>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
-                    UserId1 = table.Column<int>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -426,9 +257,74 @@
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Comments_Profiles_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "Profiles",
+                        name: "FK_Comments_Comments_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FileModels",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    ContentId = table.Column<int>(nullable: false),
+                    Extension = table.Column<string>(nullable: true),
+                    AddedByUserId = table.Column<string>(nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FileModels", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FileModels_AspNetUsers_AddedByUserId",
+                        column: x => x.AddedByUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FileModels_Contents_ContentId",
+                        column: x => x.ContentId,
+                        principalTable: "Contents",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Votes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    ContentId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: false),
+                    Type = table.Column<int>(nullable: false),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Votes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Votes_Contents_ContentId",
+                        column: x => x.ContentId,
+                        principalTable: "Contents",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Votes_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -483,6 +379,11 @@
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Categories_IsDeleted",
+                table: "Categories",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Comments_ContentId",
                 table: "Comments",
                 column: "ContentId");
@@ -493,19 +394,19 @@
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_UserId1",
+                name: "IX_Comments_ParentId",
                 table: "Comments",
-                column: "UserId1");
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contents_ApplicationUserId",
-                table: "Contents",
-                column: "ApplicationUserId");
+                name: "IX_Comments_UserId",
+                table: "Comments",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contents_DailyRankListId",
+                name: "IX_Contents_CategoryId",
                 table: "Contents",
-                column: "DailyRankListId");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contents_IsDeleted",
@@ -513,61 +414,25 @@
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contents_MonthlyRankListId",
+                name: "IX_Contents_UserId",
                 table: "Contents",
-                column: "MonthlyRankListId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contents_UserId1",
-                table: "Contents",
-                column: "UserId1");
+                name: "IX_FileModels_AddedByUserId",
+                table: "FileModels",
+                column: "AddedByUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contents_WeeklyRankListId",
-                table: "Contents",
-                column: "WeeklyRankListId");
+                name: "IX_FileModels_ContentId",
+                table: "FileModels",
+                column: "ContentId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Countries_IsDeleted",
-                table: "Countries",
+                name: "IX_FileModels_IsDeleted",
+                table: "FileModels",
                 column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DailyRankLists_IsDeleted",
-                table: "DailyRankLists",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MonthlyRankLists_IsDeleted",
-                table: "MonthlyRankLists",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProfilePicture_IsDeleted",
-                table: "ProfilePicture",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Profiles_CountryId",
-                table: "Profiles",
-                column: "CountryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Profiles_IsDeleted",
-                table: "Profiles",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Profiles_ProfileId",
-                table: "Profiles",
-                column: "ProfileId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Profiles_ProfilePictureId",
-                table: "Profiles",
-                column: "ProfilePictureId",
-                unique: true,
-                filter: "[ProfilePictureId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Settings_IsDeleted",
@@ -575,14 +440,14 @@
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SocialMedias_IsDeleted",
-                table: "SocialMedias",
-                column: "IsDeleted");
+                name: "IX_Votes_ContentId",
+                table: "Votes",
+                column: "ContentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WeeklyRankLists_IsDeleted",
-                table: "WeeklyRankLists",
-                column: "IsDeleted");
+                name: "IX_Votes_UserId",
+                table: "Votes",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -606,10 +471,13 @@
                 name: "Comments");
 
             migrationBuilder.DropTable(
+                name: "FileModels");
+
+            migrationBuilder.DropTable(
                 name: "Settings");
 
             migrationBuilder.DropTable(
-                name: "SocialMedias");
+                name: "Votes");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -618,25 +486,10 @@
                 name: "Contents");
 
             migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "DailyRankLists");
-
-            migrationBuilder.DropTable(
-                name: "MonthlyRankLists");
-
-            migrationBuilder.DropTable(
-                name: "Profiles");
-
-            migrationBuilder.DropTable(
-                name: "WeeklyRankLists");
-
-            migrationBuilder.DropTable(
-                name: "Countries");
-
-            migrationBuilder.DropTable(
-                name: "ProfilePicture");
         }
     }
 }

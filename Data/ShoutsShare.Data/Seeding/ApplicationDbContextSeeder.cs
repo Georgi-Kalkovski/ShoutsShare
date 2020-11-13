@@ -6,6 +6,7 @@
 
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using ShoutsShare.Data.Seeding.Seeders;
 
     public class ApplicationDbContextSeeder : ISeeder
     {
@@ -27,7 +28,6 @@
                           {
                               new RolesSeeder(),
                               new SettingsSeeder(),
-                              new ProfilesSeeder(),
                               new ContentsSeeder(),
                           };
 

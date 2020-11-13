@@ -17,7 +17,7 @@
     using ShoutsShare.Data.Repositories;
     using ShoutsShare.Data.Seeding;
     using ShoutsShare.Services.Data;
-    using ShoutsShare.Services.Data.Services;
+    using ShoutsShare.Services.Data.Interfaces;
     using ShoutsShare.Services.Mapping;
     using ShoutsShare.Services.Messaging;
     using ShoutsShare.Web.ViewModels;
@@ -105,7 +105,6 @@
                     {
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                        endpoints.MapControllerRoute("shoutContent", "{name:minlength(3)}", new { controller = "Contents", action = "ByName" });
                         endpoints.MapRazorPages();
                     });
         }

@@ -1,15 +1,17 @@
-﻿namespace ShoutsShare.Data.Models.RankLists
+﻿namespace ShoutsShare.Data.Models
 {
     using System.Collections.Generic;
 
     using ShoutsShare.Data.Common.Models;
 
-    public class DailyRankList : BaseDeletableModel<int>
+    public class Category : BaseDeletableModel<int>
     {
-        public DailyRankList()
+        public Category()
         {
             this.Contents = new HashSet<Content>();
         }
+
+        public string Name { get; set; }
 
         public ICollection<Content> Contents { get; set; }
     }

@@ -1,11 +1,13 @@
-﻿namespace ShoutsShare.Services.Data.Services
+﻿namespace ShoutsShare.Services.Data.Interfaces
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using ShoutsShare.Data.Common.Repositories;
     using ShoutsShare.Data.Models;
     using ShoutsShare.Services.Mapping;
+    using ShoutsShare.Web.ViewModels.Contents;
 
     public class ContentsService : IContentsService
     {
@@ -16,23 +18,22 @@
             this.contentsRepository = contentsRepository;
         }
 
-        public IEnumerable<T> GetAll<T>(int? count = null)
+        public async Task CreateAsync(CreateContentInputModel input)
         {
-            IQueryable<Content> query = this.contentsRepository.All().OrderBy(x => x.Likes);
-
-            if (count.HasValue)
+            var content = new Content
             {
-                query = query.Take(count.Value);
-            }
-
-            return query.To<T>().ToList();
-        }
-
-        public T GetByName<T>()
-        {
-            var content = this.contentsRepository.All()
-                .To<T>().FirstOrDefault();
-            return content;
+                Name = input.Name,
+                Description = input.Description,
+                Duration = input.Duration,
+                Views = input.Views,
+                Likes = input.Likes,
+                UserId = input.UserId,
+                FileModelId = input.FileModelId,
+                CategoryId = input.CategoryId,
+                Comments = input.Comments.ToList(),
+            };
+            await this.contentsRepository.AddAsync(content);
+            await this.contentsRepository.SaveChangesAsync();
         }
     }
 }
