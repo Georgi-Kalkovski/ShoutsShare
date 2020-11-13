@@ -1,25 +1,29 @@
-﻿@model ShoutsShare.Web.ViewModels.Contents.CreateContentInputModel
-<div class="form">
-    @{this.ViewData["Title"] = "Add new recipe";}
-    <form action="forms/contact.php" method="post" role="form">
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                <div class="validate"></div>
-            </div>
-            <div class="form-group col-md-6">
-                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-                <div class="validate"></div>
-            </div>
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
-            <div class="validate"></div>
-        </div>
-        <div class="form-group">
-            <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
-            <div class="validate"></div>
-        </div>
-        <div class="container position-relative"><button type="submit" class="nav-menu d-none d-lg-block btn navbar-nav">Send Message</button></div>
-    </form>
-</div>
+﻿
+@model ShoutsShare.Web.ViewModels.Contents.CreateContentInputModel
+@{this.ViewData["Title"] = "Add new recipe";}
+
+<form method="post" enctype="multipart/form-data" class="col-md-6 offset-md-3" asp-controller="Files" asp-action="Upload">
+    <h1 class="display-4">Create Content</h1>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Duration"></label>
+        <input asp-for="Duration" class="form-control" />
+        <span asp-validation-for="Duration" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <a class="cta-btn"><input type="file" name="file"></a>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" value="Upload">Upload File</button>
+    </div>
+</form>

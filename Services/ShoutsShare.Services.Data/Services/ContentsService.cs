@@ -1,5 +1,6 @@
 ﻿namespace ShoutsShare.Services.Data.Interfaces
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -24,13 +25,12 @@
             {
                 Name = input.Name,
                 Description = input.Description,
-                Duration = input.Duration,
+                Duration = TimeSpan.FromMinutes(input.Duration.Value),
                 Views = input.Views,
                 Likes = input.Likes,
                 UserId = input.UserId,
                 FileModelId = input.FileModelId,
                 CategoryId = input.CategoryId,
-                Comments = input.Comments.ToList(),
             };
             await this.contentsRepository.AddAsync(content);
             await this.contentsRepository.SaveChangesAsync();

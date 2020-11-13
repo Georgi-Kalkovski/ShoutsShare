@@ -10,7 +10,7 @@ using ShoutsShare.Data;
 namespace ShoutsShare.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201112122431_NewMigration")]
+    [Migration("20201113111233_NewMigration")]
     partial class NewMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

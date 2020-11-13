@@ -13,9 +13,9 @@
 
         public TimeSpan? Duration { get; set; }
 
-        public int? Views { get; set; }
+        public int? Views { get; set; } = 0;
 
-        public int? Likes { get; set; }
+        public int? Likes { get; set; } = 0;
 
         public string UserId { get; set; }
 
@@ -23,6 +23,6 @@
 
         public string ContentFileId { get; set; }
 
-        public int? CategoryId { get; set; }
+        public int? CategoryId { get; set; } = 0;
     }
 }

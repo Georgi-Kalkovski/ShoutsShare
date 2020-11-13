@@ -17,13 +17,13 @@
         public string Description { get; set; }
 
         [Range(0, 24 * 60)]
-        public TimeSpan? Duration { get; set; }
+        public int? Duration { get; set; }
 
         [Range(0, double.PositiveInfinity)]
-        public int Views { get; set; }
+        public int? Views { get; set; }
 
         [Range(0, double.PositiveInfinity)]
-        public int Likes { get; set; }
+        public int? Likes { get; set; }
 
         public string UserId { get; set; }
 
@@ -31,7 +31,7 @@
 
         public string ContentFileId { get; set; }
 
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
         public virtual IEnumerable<Comment> Comments { get; set; }
     }
