@@ -1,5 +1,6 @@
 ﻿namespace ShoutsShare.Web.Controllers
 {
+    using System;
     using System.Diagnostics;
 
     using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,8 @@
     using ShoutsShare.Web.ViewModels;
     using ShoutsShare.Web.ViewModels.Contents;
 
-    public class HomeController : BaseController
+
+    public class HomeController : Controller
     {
         private readonly IContentsService contentsService;
 
@@ -22,7 +24,7 @@
         public IActionResult Index()
         {
             return this.View();
-            }
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

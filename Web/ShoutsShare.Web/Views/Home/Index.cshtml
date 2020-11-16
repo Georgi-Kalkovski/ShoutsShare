@@ -1,10 +1,16 @@
 ﻿@using ShoutsShare.Common
-@model ShoutsShare.Web.ViewModels.Contents.ContentViewModel
+@model Google.Apis.YouTube.v3.Data.VideoListResponse
 @{
     this.ViewData["Title"] = "Home Page";
+    var youtube = new YoutubeLink();
 }
-
 <div class="text-center">
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div id="Container">
+        <center>
+            <div class='embed-container'><iframe width="560" height="315" src="@youtube.Youtube()" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        </center>
+
+    </div>
 </div>
